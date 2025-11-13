@@ -1,0 +1,2480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAP-TAP UNICORN - Magical Clicker Game</title>
+    <meta name="description" content="TAP-TAP UNICORN - An incredibly addictive magical clicker game with unicorns, rainbows and enchantment">
+    
+    <!-- SEO optimization -->
+    <meta property="og:title" content="TAP-TAP UNICORN - Magical Clicker Game">
+    <meta property="og:description" content="TAP-TAP UNICORN - An incredibly addictive magical clicker game with unicorns, rainbows and enchantment">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://globalygenius.github.io">
+    <meta property="og:image" content="https://globalygenius.github.io/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TAP-TAP UNICORN - Magical Clicker Game">
+    <meta name="twitter:description" content="TAP-TAP UNICORN - An incredibly addictive magical clicker game with unicorns, rainbows and enchantment">
+    <meta name="twitter:image" content="https://globalygenius.github.io/twitter-image.jpg">
+    <meta name="keywords" content="TAP-TAP UNICORN, Clicker Game, Idle Game, Unicorn, Magic, Rainbow, Addictive Game">
+    <link rel="canonical" href="https://globalygenius.github.io">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦄</text></svg>">
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #8A2BE2;
+            --primary-light: #9b45f5;
+            --primary-dark: #6a1cb5;
+            --secondary: #00CED1;
+            --secondary-light: #20e0e3;
+            --secondary-dark: #00a5a8;
+            --accent: #FF6B6B;
+            --rainbow-1: #FF6B6B;
+            --rainbow-2: #FF9E6B;
+            --rainbow-3: #FFD166;
+            --rainbow-4: #06D6A0;
+            --rainbow-5: #118AB2;
+            --rainbow-6: #073B4C;
+            --dark: #0a0a1a;
+            --darker: #050510;
+            --light: #f8f9fa;
+            --light-gray: #e9ecef;
+            --gray: #6c757d;
+            --dark-gray: #495057;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --border-radius: 16px;
+            --border-radius-lg: 24px;
+            --border-radius-sm: 8px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.25);
+            --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.35);
+            --transition: all 0.3s ease;
+            --transition-slow: all 0.5s ease;
+            --header-height: 80px;
+            --mobile-nav-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Poppins', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            line-height: 1.7;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 206, 209, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.05) 0%, transparent 30%);
+            padding-bottom: var(--mobile-nav-height);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Tab System */
+        .tabs-container {
+            display: none;
+            min-height: calc(100vh - var(--header-height) - var(--mobile-nav-height));
+            padding: 2rem 0;
+        }
+
+        .tabs-container.active {
+            display: block;
+        }
+
+        /* Header & Navigation */
+        header {
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .header-scrolled {
+            padding: 0.5rem 0;
+            background: rgba(10, 10, 26, 0.98);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: var(--header-height);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            transition: var(--transition);
+            filter: drop-shadow(0 0 10px rgba(138, 43, 226, 0.5));
+        }
+
+        .logo:hover .logo-icon {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: var(--secondary);
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: rotate(30deg);
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Mobile Bottom Navigation */
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 26, 0.98);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 999;
+            height: var(--mobile-nav-height);
+        }
+
+        .mobile-nav-content {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100%;
+            padding: 0 10px;
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 8px 5px;
+            text-decoration: none;
+            color: var(--light);
+            transition: var(--transition);
+            border-radius: var(--border-radius-sm);
+            max-width: 80px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        .mobile-nav-item.active {
+            color: var(--secondary);
+            background: rgba(0, 206, 209, 0.1);
+        }
+
+        .mobile-nav-item:hover {
+            color: var(--secondary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .mobile-nav-icon {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+            transition: var(--transition);
+        }
+
+        .mobile-nav-item.active .mobile-nav-icon {
+            transform: scale(1.1);
+        }
+
+        .mobile-nav-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* Game Section */
+        .game {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, rgba(138, 43, 226, 0.1) 100%);
+            padding-top: var(--header-height);
+        }
+
+        .game::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 206, 209, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 107, 107, 0.05) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .game-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .game-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .score-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-lg);
+            grid-column: 1 / -1;
+        }
+
+        .score-label {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .score {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3), var(--rainbow-4), var(--rainbow-5), var(--rainbow-6));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+        }
+
+        .score-per-second {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .upgrades-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-lg);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .upgrades-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .upgrade-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upgrade-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: var(--transition-slow);
+        }
+
+        .upgrade-item:hover::before {
+            left: 100%;
+        }
+
+        .upgrade-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .upgrade-item.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
+        }
+
+        .upgrade-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .upgrade-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .upgrade-description {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .upgrade-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .upgrade-stat {
+            font-size: 0.85rem;
+            color: var(--secondary);
+            background: rgba(0, 206, 209, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+        }
+
+        .upgrade-cost {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            text-align: right;
+        }
+
+        .upgrade-count {
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            text-align: right;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            gap: 0.5rem;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: var(--transition-slow);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-boost {
+            background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3));
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-boost:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn:disabled:hover {
+            transform: none;
+            background: var(--primary);
+        }
+
+        .unicorn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .unicorn {
+            font-size: 18rem;
+            cursor: pointer;
+            transition: var(--transition);
+            filter: 
+                drop-shadow(0 0 20px rgba(138, 43, 226, 0.5))
+                drop-shadow(0 0 40px rgba(0, 206, 209, 0.3))
+                drop-shadow(0 0 60px rgba(255, 107, 107, 0.2));
+            animation: float 6s ease-in-out infinite;
+            user-select: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .unicorn:hover {
+            transform: scale(1.05);
+            filter: 
+                drop-shadow(0 0 25px rgba(138, 43, 226, 0.7))
+                drop-shadow(0 0 50px rgba(0, 206, 209, 0.5))
+                drop-shadow(0 0 75px rgba(255, 107, 107, 0.3));
+        }
+
+        .unicorn:active {
+            transform: scale(0.95);
+        }
+
+        .unicorn-aura {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, transparent 70%);
+            filter: blur(20px);
+            animation: pulse 4s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% { 
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+        }
+
+        .click-effect {
+            position: absolute;
+            font-size: 2.5rem;
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+            z-index: 10;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(1.5);
+            }
+        }
+
+        .boost-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid rgba(255, 107, 107, 0.5);
+            border-radius: var(--border-radius);
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            color: var(--accent);
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+            z-index: 5;
+        }
+
+        .boost-indicator.active {
+            display: flex;
+            animation: pulse 1s infinite;
+        }
+
+        .achievements-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .achievements-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .achievement {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3), var(--rainbow-4), var(--rainbow-5));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .achievement.unlocked::before {
+            transform: scaleX(1);
+        }
+
+        .achievement.unlocked {
+            border-color: var(--secondary);
+            box-shadow: 0 0 15px rgba(0, 206, 209, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .achievement.locked {
+            opacity: 0.6;
+            filter: grayscale(0.7);
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+
+        .achievement-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .achievement-description {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .achievement-progress {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .achievement-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-2));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        /* Sections */
+        .section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--light);
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 4rem;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .section-accent {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            font-weight: 700;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .feature-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 4rem 0 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+        }
+
+        .footer-link:hover {
+            color: var(--secondary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        /* Prestige Section */
+        .prestige-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .prestige-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            font-weight: 700;
+        }
+
+        .prestige-description {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .prestige-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .prestige-stat {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+        }
+
+        .prestige-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .prestige-stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--secondary);
+            z-index: 1000;
+            animation: slideIn 0.5s ease-out;
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .notification.success {
+            border-left-color: var(--success);
+        }
+
+        .notification.warning {
+            border-left-color: var(--warning);
+        }
+
+        .notification.error {
+            border-left-color: var(--danger);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* Light Theme */
+        body.theme-light {
+            --dark: #f8f9fa;
+            --darker: #e9ecef;
+            --light: #0a0a1a;
+            --light-gray: #dee2e6;
+            --gray: #6c757d;
+            --dark-gray: #343a40;
+            background: var(--dark);
+            color: var(--light);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 206, 209, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.05) 0%, transparent 30%);
+        }
+
+        body.theme-light header {
+            background: rgba(248, 249, 250, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.theme-light .header-scrolled {
+            background: rgba(248, 249, 250, 0.98);
+        }
+
+        body.theme-light .game {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, rgba(138, 43, 226, 0.1) 100%);
+        }
+
+        body.theme-light .score-container,
+        body.theme-light .upgrades-container,
+        body.theme-light .achievements-container,
+        body.theme-light .stat-card,
+        body.theme-light .prestige-container {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: var(--light);
+        }
+
+        body.theme-light .upgrade-item,
+        body.theme-light .achievement,
+        body.theme-light .feature {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body.theme-light .upgrade-item:hover,
+        body.theme-light .achievement.unlocked,
+        body.theme-light .feature:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        body.theme-light .theme-toggle {
+            background: rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.2);
+            color: var(--light);
+        }
+
+        body.theme-light footer {
+            background: rgba(233, 236, 239, 0.5);
+            color: var(--light);
+        }
+
+        body.theme-light .social-link {
+            background: rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.2);
+            color: var(--light);
+        }
+
+        body.theme-light .social-link:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        body.theme-light .nav-link,
+        body.theme-light .footer-link {
+            color: var(--light);
+        }
+
+        body.theme-light .nav-link:hover,
+        body.theme-light .footer-link:hover {
+            color: var(--secondary);
+        }
+
+        body.theme-light .section-title,
+        body.theme-light .about-text h3 {
+            color: var(--light);
+        }
+
+        body.theme-light .about-text p {
+            color: rgba(10, 10, 26, 0.8);
+        }
+
+        body.theme-light .section-subtitle {
+            color: var(--gray);
+        }
+
+        body.theme-light .btn-secondary {
+            color: var(--light);
+            border: 2px solid var(--primary);
+        }
+
+        body.theme-light .btn-secondary:hover {
+            color: white;
+        }
+
+        body.theme-light .copyright {
+            color: rgba(10, 10, 26, 0.5);
+        }
+
+        body.theme-light .notification {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--light);
+            border-left: 4px solid var(--secondary);
+        }
+
+        body.theme-light .mobile-nav {
+            background: rgba(248, 249, 250, 0.98);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.theme-light .mobile-nav-item {
+            color: var(--light);
+        }
+
+        body.theme-light .mobile-nav-item.active {
+            color: var(--secondary);
+            background: rgba(0, 206, 209, 0.1);
+        }
+
+        body.theme-light .mobile-nav-item:hover {
+            color: var(--secondary);
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Loading Animation */
+        .loading-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: var(--header-height);
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 26, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+                box-shadow: var(--shadow-xl);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(20px);
+                gap: 1.5rem;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+            
+            .game-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .unicorn {
+                font-size: 12rem;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .achievements-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .prestige-stats {
+                grid-template-columns: 1fr;
+            }
+
+            /* Fix light theme on mobile */
+            body.theme-light .nav-links {
+                background: rgba(248, 249, 250, 0.98);
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section {
+                padding: 80px 0;
+            }
+            
+            .unicorn {
+                font-size: 10rem;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="theme-dark">
+    <!-- Loading Bar -->
+    <div class="loading-bar" id="loadingBar"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <span class="logo-icon">🦄</span>
+                    <span>TAP-TAP UNICORN</span>
+                </a>
+                
+                <nav class="nav-links" id="navLinks">
+                    <a href="#game" class="nav-link active" data-tab="game">Game</a>
+                    <a href="#about" class="nav-link" data-tab="about">About</a>
+                    <a href="#achievements" class="nav-link" data-tab="achievements">Achievements</a>
+                    <a href="#prestige" class="nav-link" data-tab="prestige">Prestige</a>
+                    
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        🌙
+                    </button>
+                </nav>
+                
+                <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Navigation menu">
+                    ☰
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-content">
+            <button class="mobile-nav-item active" data-tab="game">
+                <div class="mobile-nav-icon">🦄</div>
+                <div class="mobile-nav-label">Game</div>
+            </button>
+            <button class="mobile-nav-item" data-tab="about">
+                <div class="mobile-nav-icon">📖</div>
+                <div class="mobile-nav-label">About</div>
+            </button>
+            <button class="mobile-nav-item" data-tab="achievements">
+                <div class="mobile-nav-icon">🏆</div>
+                <div class="mobile-nav-label">Achievements</div>
+            </button>
+            <button class="mobile-nav-item" data-tab="prestige">
+                <div class="mobile-nav-icon">🌟</div>
+                <div class="mobile-nav-label">Prestige</div>
+            </button>
+            <button class="mobile-nav-item" id="mobileThemeToggle">
+                <div class="mobile-nav-icon">🌙</div>
+                <div class="mobile-nav-label">Theme</div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Game Tab -->
+    <section id="game" class="tabs-container active">
+        <div class="container">
+            <div class="game-content">
+                <div class="game-stats">
+                    <div class="score-container">
+                        <div class="score-label">Magic Points</div>
+                        <div class="score" id="score">0</div>
+                        <div class="score-per-second" id="scorePerSecond">
+                            <span>⚡</span> <span id="scorePerSecondValue">0</span> per second
+                        </div>
+                    </div>
+                    
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Clicks</div>
+                            <div class="stat-value" id="totalClicks">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Prestige Level</div>
+                            <div class="stat-value" id="prestigeLevel">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="upgrades-container">
+                        <h3 class="upgrades-title">
+                            <span>✨</span> Magical Upgrades
+                        </h3>
+                        <div id="upgradesList">
+                            <!-- Upgrades will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="unicorn-container">
+                    <div class="unicorn-aura"></div>
+                    <div class="unicorn" id="unicorn">🦄</div>
+                    <div class="click-power">
+                        <button class="btn btn-boost" id="boostButton" disabled>
+                            <span>🌈</span> Activate Rainbow Boost (Cost: 1,000)
+                        </button>
+                    </div>
+                    <div class="boost-indicator" id="boostIndicator">
+                        <span>🚀</span> Rainbow Boost Active!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Tab -->
+    <section id="achievements" class="tabs-container">
+        <div class="container">
+            <h2 class="section-title">
+                Magical <span class="section-accent">Achievements</span>
+            </h2>
+            <p class="section-subtitle">
+                Unlock these magical achievements as you progress in your unicorn adventure
+            </p>
+            
+            <div class="achievements-container">
+                <div class="achievements-grid" id="achievementsGrid">
+                    <!-- Achievements will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prestige Tab -->
+    <section id="prestige" class="tabs-container">
+        <div class="container">
+            <h2 class="section-title">
+                Unicorn <span class="section-accent">Prestige</span>
+            </h2>
+            <p class="section-subtitle">
+                Reset your progress to gain permanent bonuses and unlock new content
+            </p>
+            
+            <div class="prestige-container">
+                <h3 class="prestige-title">Ascend to Higher Magic</h3>
+                <p class="prestige-description">
+                    When you prestige, you reset your Magic Points and upgrades but gain permanent 
+                    Rainbow Shards that boost all future production. Each prestige level increases 
+                    your base production multiplier.
+                </p>
+                
+                <div class="prestige-stats">
+                    <div class="prestige-stat">
+                        <div class="prestige-stat-value" id="rainbowShards">0</div>
+                        <div class="prestige-stat-label">Rainbow Shards</div>
+                    </div>
+                    <div class="prestige-stat">
+                        <div class="prestige-stat-value" id="prestigeMultiplier">1.00x</div>
+                        <div class="prestige-stat-label">Production Multiplier</div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" id="prestigeButton" disabled>
+                    <span>🌟</span> Ascend (Requires 1,000,000 Magic Points)
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Tab -->
+    <section id="about" class="tabs-container">
+        <div class="container">
+            <h2 class="section-title">
+                About <span class="section-accent">TAP-TAP UNICORN</span>
+            </h2>
+            <p class="section-subtitle">
+                The most addictive clicker game with magical unicorns and rainbows
+            </p>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>What is TAP-TAP UNICORN?</h3>
+                    
+                    <p>
+                        TAP-TAP UNICORN is an incredibly addictive idle clicker game where you tap the magical unicorn to earn Magic Points. 
+                        Use your points to purchase upgrades that automatically generate more points for you.
+                    </p>
+                    
+                    <p>
+                        The game features beautiful rainbow visuals, satisfying animations, и прогрессивная система, которая будет заставлять вас 
+                        возвращаться снова и снова. Сколько магических очков вы сможете собрать?
+                    </p>
+                    
+                    <div class="features-grid">
+                        <div class="feature">
+                            <div class="feature-icon">🦄</div>
+                            <div class="feature-title">Magical Unicorn</div>
+                            <div class="feature-description">Tap the enchanted unicorn to earn Magic Points</div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">✨</div>
+                            <div class="feature-title">Powerful Upgrades</div>
+                            <div class="feature-description">Unlock upgrades that generate points automatically</div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">🌈</div>
+                            <div class="feature-title">Rainbow Boost</div>
+                            <div class="feature-description">Temporary multiplier for your point generation</div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">🏆</div>
+                            <div class="feature-title">Achievements</div>
+                            <div class="feature-description">Complete challenges and unlock rewards</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-text">
+                    <h3>Game Features</h3>
+                    
+                    <p>
+                        • Beautiful magical unicorn with satisfying click effects<br>
+                        • Multiple upgrades with increasing power and visual feedback<br>
+                        • Rainbow boost for temporary point multiplication<br>
+                        • Achievement system to track your progress<br>
+                        • Prestige system for long-term progression<br>
+                        • Beautiful dark/light theme options<br>
+                        • Fully responsive design for all devices
+                    </p>
+                    
+                    <p>
+                        The game automatically saves your progress, so you can continue right where you left off!
+                    </p>
+                    
+                    <h3>How to Play</h3>
+                    
+                    <p>
+                        1. Tap the unicorn to earn Magic Points<br>
+                        2. Buy upgrades to generate points automatically<br>
+                        3. Unlock achievements for special rewards<br>
+                        4. Use Rainbow Boosts to multiply your earnings<br>
+                        5. Prestige to gain permanent bonuses and restart<br>
+                        6. Enjoy the magical journey!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span>🦄</span>
+                    <span>TAP-TAP UNICORN</span>
+                </div>
+                
+                <div class="footer-links">
+                    <a href="#game" class="footer-link" data-tab="game">Game</a>
+                    <a href="#about" class="footer-link" data-tab="about">About</a>
+                    <a href="#achievements" class="footer-link" data-tab="achievements">Achievements</a>
+                    <a href="#prestige" class="footer-link" data-tab="prestige">Prestige</a>
+                </div>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="GitHub">
+                        <span>🐙</span>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Twitter">
+                        <span>🐦</span>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Discord">
+                        <span>🎮</span>
+                    </a>
+                </div>
+                
+                <p class="copyright">
+                    © 2024 TAP-TAP UNICORN — The most addictive clicker game. All rights reserved.<br>
+                    Made with ❤️ and 🦄 magic by Globaly Genius
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced game state
+        const gameState = {
+            score: 0,
+            scorePerSecond: 0,
+            totalClicks: 0,
+            upgrades: [
+                {
+                    id: 1,
+                    name: "Magic Horn",
+                    description: "A magical horn that generates points",
+                    icon: "🦄",
+                    baseCost: 10,
+                    cost: 10,
+                    baseProduction: 1,
+                    production: 1,
+                    count: 0,
+                    multiplier: 1
+                },
+                {
+                    id: 2,
+                    name: "Rainbow Mane",
+                    description: "A beautiful rainbow mane that generates more points",
+                    icon: "🌈",
+                    baseCost: 50,
+                    cost: 50,
+                    baseProduction: 5,
+                    production: 5,
+                    count: 0,
+                    multiplier: 1
+                },
+                {
+                    id: 3,
+                    name: "Sparkle Hooves",
+                    description: "Sparkling hooves that create magical dust",
+                    icon: "✨",
+                    baseCost: 200,
+                    cost: 200,
+                    baseProduction: 20,
+                    production: 20,
+                    count: 0,
+                    multiplier: 1
+                },
+                {
+                    id: 4,
+                    name: "Golden Wings",
+                    description: "Golden wings that spread magical energy",
+                    icon: "🪽",
+                    baseCost: 1000,
+                    cost: 1000,
+                    baseProduction: 100,
+                    production: 100,
+                    count: 0,
+                    multiplier: 1
+                },
+                {
+                    id: 5,
+                    name: "Crystal Horn",
+                    description: "A crystal horn that amplifies all magic",
+                    icon: "🔮",
+                    baseCost: 5000,
+                    cost: 5000,
+                    baseProduction: 500,
+                    production: 500,
+                    count: 0,
+                    multiplier: 1
+                },
+                {
+                    id: 6,
+                    name: "Starlight Aura",
+                    description: "A starlight aura that attracts cosmic energy",
+                    icon: "⭐",
+                    baseCost: 20000,
+                    cost: 20000,
+                    baseProduction: 2000,
+                    production: 2000,
+                    count: 0,
+                    multiplier: 1
+                },
+                {
+                    id: 7,
+                    name: "Galaxy Tail",
+                    description: "A tail made of galaxies and stars",
+                    icon: "🌌",
+                    baseCost: 100000,
+                    cost: 100000,
+                    baseProduction: 10000,
+                    production: 10000,
+                    count: 0,
+                    multiplier: 1
+                },
+                {
+                    id: 8,
+                    name: "Universe Core",
+                    description: "The very core of the universe itself",
+                    icon: "🌠",
+                    baseCost: 500000,
+                    cost: 500000,
+                    baseProduction: 50000,
+                    production: 50000,
+                    count: 0,
+                    multiplier: 1
+                }
+            ],
+            achievements: [
+                {
+                    id: 1,
+                    name: "First Steps",
+                    description: "Reach 100 Magic Points",
+                    icon: "🌟",
+                    condition: (state) => state.score >= 100,
+                    unlocked: false,
+                    progress: (state) => Math.min(state.score / 100, 1)
+                },
+                {
+                    id: 2,
+                    name: "Magic Collector",
+                    description: "Reach 1,000 Magic Points",
+                    icon: "✨",
+                    condition: (state) => state.score >= 1000,
+                    unlocked: false,
+                    progress: (state) => Math.min(state.score / 1000, 1)
+                },
+                {
+                    id: 3,
+                    name: "Rainbow Maker",
+                    description: "Reach 10,000 Magic Points",
+                    icon: "🌈",
+                    condition: (state) => state.score >= 10000,
+                    unlocked: false,
+                    progress: (state) => Math.min(state.score / 10000, 1)
+                },
+                {
+                    id: 4,
+                    name: "Unicorn Tamer",
+                    description: "Reach 100,000 Magic Points",
+                    icon: "🦄",
+                    condition: (state) => state.score >= 100000,
+                    unlocked: false,
+                    progress: (state) => Math.min(state.score / 100000, 1)
+                },
+                {
+                    id: 5,
+                    name: "Star Creator",
+                    description: "Reach 1,000,000 Magic Points",
+                    icon: "⭐",
+                    condition: (state) => state.score >= 1000000,
+                    unlocked: false,
+                    progress: (state) => Math.min(state.score / 1000000, 1)
+                },
+                {
+                    id: 6,
+                    name: "Galaxy Forger",
+                    description: "Reach 10,000,000 Magic Points",
+                    icon: "🌌",
+                    condition: (state) => state.score >= 10000000,
+                    unlocked: false,
+                    progress: (state) => Math.min(state.score / 10000000, 1)
+                },
+                {
+                    id: 7,
+                    name: "First Upgrade",
+                    description: "Purchase your first upgrade",
+                    icon: "🔼",
+                    condition: (state) => state.upgrades.some(upgrade => upgrade.count > 0),
+                    unlocked: false,
+                    progress: (state) => state.upgrades.some(upgrade => upgrade.count > 0) ? 1 : 0
+                },
+                {
+                    id: 8,
+                    name: "Upgrade Master",
+                    description: "Purchase 10 upgrades in total",
+                    icon: "🔝",
+                    condition: (state) => state.upgrades.reduce((sum, upgrade) => sum + upgrade.count, 0) >= 10,
+                    unlocked: false,
+                    progress: (state) => Math.min(state.upgrades.reduce((sum, upgrade) => sum + upgrade.count, 0) / 10, 1)
+                },
+                {
+                    id: 9,
+                    name: "Rainbow Booster",
+                    description: "Activate the Rainbow Boost for the first time",
+                    icon: "🚀",
+                    condition: (state) => state.boostUsed,
+                    unlocked: false,
+                    progress: (state) => state.boostUsed ? 1 : 0
+                },
+                {
+                    id: 10,
+                    name: "Click Master",
+                    description: "Reach 1,000 total clicks",
+                    icon: "👆",
+                    condition: (state) => state.totalClicks >= 1000,
+                    unlocked: false,
+                    progress: (state) => Math.min(state.totalClicks / 1000, 1)
+                },
+                {
+                    id: 11,
+                    name: "Prestige Seeker",
+                    description: "Prestige for the first time",
+                    icon: "🌟",
+                    condition: (state) => state.prestigeLevel >= 1,
+                    unlocked: false,
+                    progress: (state) => state.prestigeLevel >= 1 ? 1 : 0
+                }
+            ],
+            boostActive: false,
+            boostMultiplier: 2,
+            boostDuration: 10000, // 10 seconds
+            boostEndTime: 0,
+            boostUsed: false,
+            prestigeLevel: 0,
+            rainbowShards: 0,
+            prestigeMultiplier: 1,
+            lastUpdate: Date.now(),
+            offlineProgress: true
+        };
+
+        // DOM Elements
+        const scoreElement = document.getElementById('score');
+        const scorePerSecondElement = document.getElementById('scorePerSecondValue');
+        const totalClicksElement = document.getElementById('totalClicks');
+        const prestigeLevelElement = document.getElementById('prestigeLevel');
+        const rainbowShardsElement = document.getElementById('rainbowShards');
+        const prestigeMultiplierElement = document.getElementById('prestigeMultiplier');
+        const upgradesListElement = document.getElementById('upgradesList');
+        const unicornElement = document.getElementById('unicorn');
+        const boostButton = document.getElementById('boostButton');
+        const boostIndicator = document.getElementById('boostIndicator');
+        const prestigeButton = document.getElementById('prestigeButton');
+        const achievementsGridElement = document.getElementById('achievementsGrid');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+
+        // Tab Management
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tabs-container').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelectorAll('.mobile-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Activate current tab in navigation
+            document.querySelector(`.nav-link[data-tab="${tabId}"]`).classList.add('active');
+            document.querySelector(`.mobile-nav-item[data-tab="${tabId}"]`).classList.add('active');
+            
+            // Save active tab
+            localStorage.setItem('activeTab', tabId);
+        }
+
+        // Format numbers with commas
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(2) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Calculate score per second
+        function calculateScorePerSecond() {
+            let total = 0;
+            gameState.upgrades.forEach(upgrade => {
+                total += upgrade.production * upgrade.count;
+            });
+            // Apply prestige multiplier
+            total *= gameState.prestigeMultiplier;
+            gameState.scorePerSecond = total;
+            scorePerSecondElement.textContent = formatNumber(total);
+        }
+
+        // Update score display
+        function updateScoreDisplay() {
+            scoreElement.textContent = formatNumber(Math.floor(gameState.score));
+            totalClicksElement.textContent = formatNumber(gameState.totalClicks);
+            prestigeLevelElement.textContent = gameState.prestigeLevel;
+            rainbowShardsElement.textContent = gameState.rainbowShards;
+            prestigeMultiplierElement.textContent = gameState.prestigeMultiplier.toFixed(2) + 'x';
+            
+            // Update prestige button
+            prestigeButton.disabled = gameState.score < 1000000;
+        }
+
+        // Create upgrade elements
+        function createUpgradeElements() {
+            upgradesListElement.innerHTML = '';
+            
+            gameState.upgrades.forEach(upgrade => {
+                const upgradeElement = document.createElement('div');
+                upgradeElement.className = 'upgrade-item';
+                upgradeElement.innerHTML = `
+                    <div class="upgrade-info">
+                        <div class="upgrade-name">
+                            <span>${upgrade.icon}</span>
+                            <span>${upgrade.name}</span>
+                        </div>
+                        <div class="upgrade-description">${upgrade.description}</div>
+                        <div class="upgrade-stats">
+                            <div class="upgrade-stat">+${formatNumber(upgrade.production * gameState.prestigeMultiplier)}/s</div>
+                            <div class="upgrade-stat">Owned: ${upgrade.count}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="upgrade-cost">${formatNumber(upgrade.cost)} MP</div>
+                        <button class="btn btn-primary upgrade-btn" data-id="${upgrade.id}">Buy</button>
+                    </div>
+                `;
+                
+                upgradesListElement.appendChild(upgradeElement);
+            });
+            
+            // Add event listeners to upgrade buttons
+            document.querySelectorAll('.upgrade-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const upgradeId = parseInt(this.getAttribute('data-id'));
+                    buyUpgrade(upgradeId);
+                });
+            });
+        }
+
+        // Buy upgrade with visual feedback
+        function buyUpgrade(id) {
+            const upgrade = gameState.upgrades.find(u => u.id === id);
+            
+            if (gameState.score >= upgrade.cost) {
+                gameState.score -= upgrade.cost;
+                upgrade.count++;
+                
+                // Visual feedback for purchase
+                const upgradeElement = document.querySelector(`.upgrade-btn[data-id="${id}"]`).closest('.upgrade-item');
+                upgradeElement.classList.add('purchase-feedback');
+                setTimeout(() => upgradeElement.classList.remove('purchase-feedback'), 500);
+                
+                // Increase cost for next purchase (10% more)
+                upgrade.cost = Math.floor(upgrade.baseCost * Math.pow(1.1, upgrade.count));
+                
+                updateScoreDisplay();
+                calculateScorePerSecond();
+                updateUpgradeButtons();
+                saveGame();
+                checkAchievements();
+                
+                // Show notification for first upgrade
+                if (upgrade.count === 1 && upgrade.id === 1) {
+                    showNotification('First upgrade purchased! Your unicorn is getting stronger!', 'success');
+                }
+            } else {
+                // Visual feedback for insufficient funds
+                const upgradeElement = document.querySelector(`.upgrade-btn[data-id="${id}"]`).closest('.upgrade-item');
+                upgradeElement.classList.add('insufficient-funds');
+                setTimeout(() => upgradeElement.classList.remove('insufficient-funds'), 500);
+            }
+        }
+
+        // Update upgrade buttons state
+        function updateUpgradeButtons() {
+            document.querySelectorAll('.upgrade-btn').forEach(button => {
+                const upgradeId = parseInt(button.getAttribute('data-id'));
+                const upgrade = gameState.upgrades.find(u => u.id === upgradeId);
+                
+                if (gameState.score >= upgrade.cost) {
+                    button.disabled = false;
+                    button.textContent = 'Buy';
+                    button.classList.remove('btn-secondary');
+                    button.classList.add('btn-primary');
+                } else {
+                    button.disabled = true;
+                    button.textContent = 'Buy';
+                    button.classList.remove('btn-primary');
+                    button.classList.add('btn-secondary');
+                }
+                
+                // Update cost display
+                const costElement = button.parentElement.querySelector('.upgrade-cost');
+                costElement.textContent = `${formatNumber(upgrade.cost)} MP`;
+                
+                // Update count display
+                const countElement = button.closest('.upgrade-item').querySelector('.upgrade-stat:last-child');
+                countElement.textContent = `Owned: ${upgrade.count}`;
+                
+                // Update production display
+                const productionElement = button.closest('.upgrade-item').querySelector('.upgrade-stat:first-child');
+                productionElement.textContent = `+${formatNumber(upgrade.production * gameState.prestigeMultiplier)}/s`;
+            });
+        }
+
+        // Create click effect
+        function createClickEffect(x, y, points = 1) {
+            const effect = document.createElement('div');
+            effect.className = 'click-effect';
+            effect.textContent = `+${points}`;
+            effect.style.left = `${x}px`;
+            effect.style.top = `${y}px`;
+            
+            // Random color for variety
+            const colors = ['#FF6B6B', '#FF9E6B', '#FFD166', '#06D6A0', '#118AB2', '#8A2BE2'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            effect.style.color = randomColor;
+            
+            document.body.appendChild(effect);
+            
+            // Remove effect after animation completes
+            setTimeout(() => {
+                effect.remove();
+            }, 1000);
+        }
+
+        // Unicorn click handler
+        unicornElement.addEventListener('click', function(e) {
+            // Calculate points with boost multiplier
+            const basePoints = 1;
+            const points = gameState.boostActive ? basePoints * gameState.boostMultiplier : basePoints;
+            gameState.score += points;
+            gameState.totalClicks++;
+            
+            updateScoreDisplay();
+            saveGame();
+            checkAchievements();
+            
+            // Create click effect
+            const rect = unicornElement.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            createClickEffect(e.clientX, e.clientY, points);
+            
+            // Add visual feedback
+            unicornElement.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                unicornElement.style.transform = '';
+            }, 100);
+            
+            // Random unicorn reaction
+            if (Math.random() < 0.1) {
+                unicornElement.style.transform = 'scale(1.1) rotate(5deg)';
+                setTimeout(() => {
+                    unicornElement.style.transform = '';
+                }, 200);
+            }
+        });
+
+        // Boost button handler
+        boostButton.addEventListener('click', function() {
+            if (gameState.score >= 1000 && !gameState.boostActive) {
+                gameState.score -= 1000;
+                gameState.boostActive = true;
+                gameState.boostUsed = true;
+                gameState.boostEndTime = Date.now() + gameState.boostDuration;
+                
+                updateScoreDisplay();
+                boostButton.disabled = true;
+                boostButton.textContent = 'Rainbow Boost Active!';
+                boostIndicator.classList.add('active');
+                
+                // Visual feedback for boost
+                document.body.style.animation = 'rainbowBackground 10s linear';
+                unicornElement.style.filter = 
+                    'drop-shadow(0 0 30px rgba(138, 43, 226, 0.7)) ' +
+                    'drop-shadow(0 0 60px rgba(0, 206, 209, 0.5)) ' +
+                    'drop-shadow(0 0 90px rgba(255, 107, 107, 0.3))';
+                
+                setTimeout(() => {
+                    document.body.style.animation = '';
+                    unicornElement.style.filter = '';
+                }, 10000);
+                
+                saveGame();
+                checkAchievements();
+                
+                // Show notification
+                showNotification('Rainbow Boost activated! Your points are doubled for 10 seconds!', 'success');
+                
+                // End boost after duration
+                setTimeout(() => {
+                    gameState.boostActive = false;
+                    boostButton.disabled = gameState.score < 1000;
+                    boostButton.innerHTML = '<span>🌈</span> Activate Rainbow Boost (Cost: 1,000)';
+                    boostIndicator.classList.remove('active');
+                    
+                    // Show notification
+                    showNotification('Rainbow Boost has ended.', 'warning');
+                }, gameState.boostDuration);
+            }
+        });
+
+        // Prestige button handler
+        prestigeButton.addEventListener('click', function() {
+            if (gameState.score >= 1000000) {
+                // Calculate rainbow shards based on score
+                const shardsEarned = Math.floor(Math.sqrt(gameState.score / 1000000));
+                gameState.rainbowShards += shardsEarned;
+                gameState.prestigeLevel++;
+                
+                // Calculate new multiplier
+                gameState.prestigeMultiplier = 1 + (gameState.rainbowShards * 0.1);
+                
+                // Reset game state but keep achievements and prestige data
+                gameState.score = 0;
+                gameState.totalClicks = 0;
+                gameState.upgrades.forEach(upgrade => {
+                    upgrade.count = 0;
+                    upgrade.cost = upgrade.baseCost;
+                });
+                
+                updateScoreDisplay();
+                calculateScorePerSecond();
+                createUpgradeElements();
+                updateUpgradeButtons();
+                saveGame();
+                checkAchievements();
+                
+                // Show notification
+                showNotification(`Prestige achieved! You gained ${shardsEarned} Rainbow Shards. Production multiplier is now ${gameState.prestigeMultiplier.toFixed(2)}x!`, 'success');
+            }
+        });
+
+        // Create achievement elements
+        function createAchievementElements() {
+            achievementsGridElement.innerHTML = '';
+            
+            gameState.achievements.forEach(achievement => {
+                const achievementElement = document.createElement('div');
+                achievementElement.className = `achievement ${achievement.unlocked ? 'unlocked' : 'locked'}`;
+                
+                const progress = achievement.progress ? achievement.progress(gameState) : 0;
+                const progressPercent = Math.floor(progress * 100);
+                
+                achievementElement.innerHTML = `
+                    <div class="achievement-icon">${achievement.icon}</div>
+                    <div class="achievement-name">${achievement.name}</div>
+                    <div class="achievement-description">${achievement.description}</div>
+                    ${!achievement.unlocked ? `
+                    <div class="achievement-progress">
+                        <div class="achievement-progress-bar" style="width: ${progressPercent}%"></div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--gray); margin-top: 0.5rem;">${progressPercent}%</div>
+                    ` : ''}
+                `;
+                
+                achievementsGridElement.appendChild(achievementElement);
+            });
+        }
+
+        // Check achievements
+        function checkAchievements() {
+            let newAchievements = false;
+            
+            gameState.achievements.forEach(achievement => {
+                if (!achievement.unlocked && achievement.condition(gameState)) {
+                    achievement.unlocked = true;
+                    newAchievements = true;
+                    
+                    // Show achievement notification
+                    showAchievementNotification(achievement);
+                }
+            });
+            
+            if (newAchievements) {
+                createAchievementElements();
+                saveGame();
+            }
+        }
+
+        // Show achievement notification
+        function showAchievementNotification(achievement) {
+            const notification = document.createElement('div');
+            notification.className = 'notification success';
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="font-size: 2rem;">${achievement.icon}</div>
+                    <div>
+                        <div style="font-weight: bold; font-size: 1.1rem;">Achievement Unlocked!</div>
+                        <div>${achievement.name}</div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.5s ease-in forwards';
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 3000);
+        }
+
+        // Show custom notification
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.5s ease-in forwards';
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 3000);
+        }
+
+        // Add CSS for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            .upgrade-item.purchase-feedback {
+                animation: purchasePulse 0.5s ease;
+                border-color: var(--secondary) !important;
+            }
+            
+            .upgrade-item.insufficient-funds {
+                animation: shake 0.5s ease;
+                border-color: var(--danger) !important;
+            }
+            
+            @keyframes purchasePulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+            
+            @keyframes rainbowBackground {
+                0% { background: linear-gradient(45deg, #FF6B6B, #FF9E6B, #FFD166, #06D6A0, #118AB2, #073B4C); }
+                16% { background: linear-gradient(45deg, #FF9E6B, #FFD166, #06D6A0, #118AB2, #073B4C, #FF6B6B); }
+                32% { background: linear-gradient(45deg, #FFD166, #06D6A0, #118AB2, #073B4C, #FF6B6B, #FF9E6B); }
+                48% { background: linear-gradient(45deg, #06D6A0, #118AB2, #073B4C, #FF6B6B, #FF9E6B, #FFD166); }
+                64% { background: linear-gradient(45deg, #118AB2, #073B4C, #FF6B6B, #FF9E6B, #FFD166, #06D6A0); }
+                80% { background: linear-gradient(45deg, #073B4C, #FF6B6B, #FF9E6B, #FFD166, #06D6A0, #118AB2); }
+                100% { background: linear-gradient(45deg, #FF6B6B, #FF9E6B, #FFD166, #06D6A0, #118AB2, #073B4C); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Game loop for passive income
+        function gameLoop() {
+            const now = Date.now();
+            const deltaTime = (now - gameState.lastUpdate) / 1000; // Convert to seconds
+            
+            // Add passive income
+            if (deltaTime > 0) {
+                const passiveIncome = gameState.scorePerSecond * deltaTime;
+                gameState.score += passiveIncome;
+                
+                updateScoreDisplay();
+                gameState.lastUpdate = now;
+            }
+            
+            // Check boost status
+            if (gameState.boostActive && now >= gameState.boostEndTime) {
+                gameState.boostActive = false;
+                boostButton.disabled = gameState.score < 1000;
+                boostButton.innerHTML = '<span>🌈</span> Activate Rainbow Boost (Cost: 1,000)';
+                boostIndicator.classList.remove('active');
+            }
+            
+            // Update boost button
+            if (!gameState.boostActive) {
+                boostButton.disabled = gameState.score < 1000;
+            }
+            
+            // Update upgrade buttons
+            updateUpgradeButtons();
+            
+            // Check achievements
+            checkAchievements();
+            
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Save game state to localStorage
+        function saveGame() {
+            // Don't save too frequently to prevent performance issues
+            if (!this.lastSave || Date.now() - this.lastSave > 1000) {
+                localStorage.setItem('tapTapUnicornSave', JSON.stringify(gameState));
+                this.lastSave = Date.now();
+            }
+        }
+
+        // Load game state from localStorage
+        function loadGame() {
+            const save = localStorage.getItem('tapTapUnicornSave');
+            if (save) {
+                const savedState = JSON.parse(save);
+                
+                // Calculate offline progress
+                if (savedState.lastUpdate && gameState.offlineProgress) {
+                    const offlineTime = Date.now() - savedState.lastUpdate;
+                    const offlineSeconds = offlineTime / 1000;
+                    const maxOfflineTime = 24 * 60 * 60; // 24 hours max
+                    
+                    if (offlineSeconds > 0 && offlineSeconds < maxOfflineTime) {
+                        // Calculate offline income
+                        let offlineIncome = 0;
+                        savedState.upgrades.forEach(upgrade => {
+                            offlineIncome += upgrade.production * upgrade.count;
+                        });
+                        
+                        // Apply prestige multiplier
+                        offlineIncome *= savedState.prestigeMultiplier || 1;
+                        
+                        // Calculate total offline earnings
+                        const totalOfflineEarnings = offlineIncome * Math.min(offlineSeconds, maxOfflineTime);
+                        
+                        // Add to score
+                        savedState.score += totalOfflineEarnings;
+                        
+                        // Show offline progress notification
+                        if (totalOfflineEarnings > 0) {
+                            setTimeout(() => {
+                                showNotification(`While you were away, your unicorn earned ${formatNumber(Math.floor(totalOfflineEarnings))} Magic Points!`, 'success');
+                            }, 1000);
+                        }
+                    }
+                }
+                
+                // Merge saved state with current state
+                Object.keys(savedState).forEach(key => {
+                    if (key === 'upgrades') {
+                        // Merge upgrades carefully to preserve functions
+                        savedState.upgrades.forEach((savedUpgrade, index) => {
+                            if (gameState.upgrades[index]) {
+                                Object.keys(savedUpgrade).forEach(upgradeKey => {
+                                    gameState.upgrades[index][upgradeKey] = savedUpgrade[upgradeKey];
+                                });
+                            }
+                        });
+                    } else if (key === 'achievements') {
+                        // Merge achievements carefully to preserve functions
+                        savedState.achievements.forEach((savedAchievement, index) => {
+                            if (gameState.achievements[index]) {
+                                Object.keys(savedAchievement).forEach(achievementKey => {
+                                    if (achievementKey !== 'condition' && achievementKey !== 'progress') {
+                                        gameState.achievements[index][achievementKey] = savedAchievement[achievementKey];
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        gameState[key] = savedState[key];
+                    }
+                });
+                
+                gameState.lastUpdate = Date.now();
+            }
+        }
+
+        // Initialize game
+        function initGame() {
+            loadGame();
+            updateScoreDisplay();
+            calculateScorePerSecond();
+            createUpgradeElements();
+            createAchievementElements();
+            updateUpgradeButtons();
+            
+            // Check boost button state
+            boostButton.disabled = gameState.score < 1000;
+            
+            // Start game loop
+            gameState.lastUpdate = Date.now();
+            gameLoop();
+            
+            // Auto-save every 30 seconds
+            setInterval(saveGame, 30000);
+        }
+
+        // Tab navigation
+        document.querySelectorAll('.nav-link, .mobile-nav-item, .footer-link').forEach(link => {
+            if (link.getAttribute('data-tab')) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tabId = this.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
+            }
+        });
+
+        // Mobile Navigation Toggle
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        navToggle.addEventListener('click', () => {
+            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                navToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Mobile theme toggle
+        mobileThemeToggle.addEventListener('click', () => {
+            const isDark = document.body.classList.contains('theme-dark');
+            
+            if (isDark) {
+                document.body.classList.remove('theme-dark');
+                document.body.classList.add('theme-light');
+                mobileThemeToggle.querySelector('.mobile-nav-icon').textContent = '☀️';
+                document.getElementById('themeToggle').innerHTML = '☀️';
+            } else {
+                document.body.classList.remove('theme-light');
+                document.body.classList.add('theme-dark');
+                mobileThemeToggle.querySelector('.mobile-nav-icon').textContent = '🌙';
+                document.getElementById('themeToggle').innerHTML = '🌙';
+            }
+            
+            // Save theme preference
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+            
+            // Update loading bar
+            const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('loadingBar').style.width = `${scrollPercentage}%`;
+        });
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.body.classList.contains('theme-dark');
+            
+            if (isDark) {
+                document.body.classList.remove('theme-dark');
+                document.body.classList.add('theme-light');
+                themeToggle.innerHTML = '☀️';
+                mobileThemeToggle.querySelector('.mobile-nav-icon').textContent = '☀️';
+                themeToggle.setAttribute('aria-label', 'Switch to dark theme');
+            } else {
+                document.body.classList.remove('theme-light');
+                document.body.classList.add('theme-dark');
+                themeToggle.innerHTML = '🌙';
+                mobileThemeToggle.querySelector('.mobile-nav-icon').textContent = '🌙';
+                themeToggle.setAttribute('aria-label', 'Switch to light theme');
+            }
+            
+            // Save theme preference
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        });
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set current year in copyright
+            document.querySelector('.copyright').innerHTML = document.querySelector('.copyright').innerHTML.replace('2024', new Date().getFullYear());
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            if (savedTheme === 'light') {
+                document.body.classList.remove('theme-dark');
+                document.body.classList.add('theme-light');
+                themeToggle.innerHTML = '☀️';
+                mobileThemeToggle.querySelector('.mobile-nav-icon').textContent = '☀️';
+                themeToggle.setAttribute('aria-label', 'Switch to dark theme');
+            }
+            
+            // Load saved tab
+            const savedTab = localStorage.getItem('activeTab') || 'game';
+            switchTab(savedTab);
+            
+            // Initialize the game
+            initGame();
+        });
+    </script>
+</body>
+</html>
