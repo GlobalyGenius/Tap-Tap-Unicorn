@@ -20,6 +20,14 @@
     <link rel="canonical" href="https://globalygenius.github.io">
     <meta name="robots" content="index, follow">
     
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000100">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TAP-TAP UNICORN">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦄</text></svg>">
     
@@ -43,8 +51,8 @@
             --rainbow-4: #06D6A0;
             --rainbow-5: #118AB2;
             --rainbow-6: #073B4C;
-            --dark: #0a0a1a;
-            --darker: #050510;
+            --dark: #000100;
+            --darker: #000000;
             --light: #f8f9fa;
             --light-gray: #e9ecef;
             --gray: #6c757d;
@@ -99,7 +107,8 @@
         .tabs-container {
             display: none;
             min-height: calc(100vh - var(--header-height) - var(--mobile-nav-height));
-            padding: 2rem 0;
+            padding-top: calc(var(--header-height) + 2rem);
+            padding-bottom: 2rem;
         }
 
         .tabs-container.active {
@@ -114,22 +123,23 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(10, 10, 26, 0.95);
+            background: rgba(0, 1, 0, 0.95);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             transition: var(--transition);
+            height: var(--header-height);
         }
 
         .header-scrolled {
             padding: 0.5rem 0;
-            background: rgba(10, 10, 26, 0.98);
+            background: rgba(0, 1, 0, 0.98);
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: var(--header-height);
+            height: 100%;
         }
 
         .logo {
@@ -197,6 +207,71 @@
             width: 100%;
         }
 
+        /* Language Selector */
+        .language-selector {
+            position: relative;
+        }
+
+        .language-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .language-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--dark);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            padding: 0.5rem 0;
+            min-width: 150px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            z-index: 1001;
+        }
+
+        .language-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .language-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .language-flag {
+            font-size: 1.2rem;
+        }
+
         /* Theme Toggle */
         .theme-toggle {
             background: rgba(255, 255, 255, 0.1);
@@ -241,7 +316,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(10, 10, 26, 0.98);
+            background: rgba(0, 1, 0, 0.98);
             backdrop-filter: blur(20px);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 999;
@@ -1074,7 +1149,7 @@
         body.theme-light {
             --dark: #f8f9fa;
             --darker: #e9ecef;
-            --light: #0a0a1a;
+            --light: #000100;
             --light-gray: #dee2e6;
             --gray: #6c757d;
             --dark-gray: #343a40;
@@ -1160,7 +1235,7 @@
         }
 
         body.theme-light .about-text p {
-            color: rgba(10, 10, 26, 0.8);
+            color: rgba(0, 1, 0, 0.8);
         }
 
         body.theme-light .section-subtitle {
@@ -1177,7 +1252,7 @@
         }
 
         body.theme-light .copyright {
-            color: rgba(10, 10, 26, 0.5);
+            color: rgba(0, 1, 0, 0.5);
         }
 
         body.theme-light .notification {
@@ -1224,7 +1299,7 @@
                 top: var(--header-height);
                 left: 0;
                 right: 0;
-                background: rgba(10, 10, 26, 0.98);
+                background: rgba(0, 1, 0, 0.98);
                 flex-direction: column;
                 padding: 2rem;
                 transform: translateY(-100%);
@@ -1272,6 +1347,11 @@
                 grid-template-columns: 1fr;
             }
 
+            .language-dropdown {
+                right: auto;
+                left: 0;
+            }
+
             /* Fix light theme on mobile */
             body.theme-light .nav-links {
                 background: rgba(248, 249, 250, 0.98);
@@ -1313,14 +1393,36 @@
             <div class="header-content">
                 <a href="#" class="logo">
                     <span class="logo-icon">🦄</span>
-                    <span>TAP-TAP UNICORN</span>
+                    <span data-translate="app_title">TAP-TAP UNICORN</span>
                 </a>
                 
                 <nav class="nav-links" id="navLinks">
-                    <a href="#game" class="nav-link active" data-tab="game">Game</a>
-                    <a href="#about" class="nav-link" data-tab="about">About</a>
-                    <a href="#achievements" class="nav-link" data-tab="achievements">Achievements</a>
-                    <a href="#prestige" class="nav-link" data-tab="prestige">Prestige</a>
+                    <a href="#game" class="nav-link active" data-tab="game" data-translate="nav_game">Game</a>
+                    <a href="#about" class="nav-link" data-tab="about" data-translate="nav_about">About</a>
+                    <a href="#achievements" class="nav-link" data-tab="achievements" data-translate="nav_achievements">Achievements</a>
+                    <a href="#prestige" class="nav-link" data-tab="prestige" data-translate="nav_prestige">Prestige</a>
+                    
+                    <!-- Language Selector -->
+                    <div class="language-selector">
+                        <button class="language-toggle" id="languageToggle">
+                            <span class="language-flag">🌐</span>
+                            <span data-translate="lang_en">EN</span>
+                        </button>
+                        <div class="language-dropdown" id="languageDropdown">
+                            <a href="#" class="language-option" data-lang="en">
+                                <span class="language-flag">🇺🇸</span>
+                                <span data-translate="lang_en_full">English</span>
+                            </a>
+                            <a href="#" class="language-option" data-lang="ru">
+                                <span class="language-flag">🇷🇺</span>
+                                <span data-translate="lang_ru_full">Русский</span>
+                            </a>
+                            <a href="#" class="language-option" data-lang="be">
+                                <span class="language-flag">🇧🇾</span>
+                                <span data-translate="lang_be_full">Беларуская</span>
+                            </a>
+                        </div>
+                    </div>
                     
                     <!-- Theme Toggle -->
                     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -1340,23 +1442,23 @@
         <div class="mobile-nav-content">
             <button class="mobile-nav-item active" data-tab="game">
                 <div class="mobile-nav-icon">🦄</div>
-                <div class="mobile-nav-label">Game</div>
+                <div class="mobile-nav-label" data-translate="nav_game">Game</div>
             </button>
             <button class="mobile-nav-item" data-tab="about">
                 <div class="mobile-nav-icon">📖</div>
-                <div class="mobile-nav-label">About</div>
+                <div class="mobile-nav-label" data-translate="nav_about">About</div>
             </button>
             <button class="mobile-nav-item" data-tab="achievements">
                 <div class="mobile-nav-icon">🏆</div>
-                <div class="mobile-nav-label">Achievements</div>
+                <div class="mobile-nav-label" data-translate="nav_achievements">Achievements</div>
             </button>
             <button class="mobile-nav-item" data-tab="prestige">
                 <div class="mobile-nav-icon">🌟</div>
-                <div class="mobile-nav-label">Prestige</div>
+                <div class="mobile-nav-label" data-translate="nav_prestige">Prestige</div>
             </button>
             <button class="mobile-nav-item" id="mobileThemeToggle">
                 <div class="mobile-nav-icon">🌙</div>
-                <div class="mobile-nav-label">Theme</div>
+                <div class="mobile-nav-label" data-translate="nav_theme">Theme</div>
             </button>
         </div>
     </nav>
@@ -1367,27 +1469,27 @@
             <div class="game-content">
                 <div class="game-stats">
                     <div class="score-container">
-                        <div class="score-label">Magic Points</div>
+                        <div class="score-label" data-translate="score_label">Magic Points</div>
                         <div class="score" id="score">0</div>
                         <div class="score-per-second" id="scorePerSecond">
-                            <span>⚡</span> <span id="scorePerSecondValue">0</span> per second
+                            <span>⚡</span> <span id="scorePerSecondValue">0</span> <span data-translate="per_second">per second</span>
                         </div>
                     </div>
                     
                     <div class="stats-container">
                         <div class="stat-card">
-                            <div class="stat-label">Total Clicks</div>
+                            <div class="stat-label" data-translate="total_clicks">Total Clicks</div>
                             <div class="stat-value" id="totalClicks">0</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-label">Prestige Level</div>
+                            <div class="stat-label" data-translate="prestige_level">Prestige Level</div>
                             <div class="stat-value" id="prestigeLevel">0</div>
                         </div>
                     </div>
                     
                     <div class="upgrades-container">
                         <h3 class="upgrades-title">
-                            <span>✨</span> Magical Upgrades
+                            <span>✨</span> <span data-translate="upgrades_title">Magical Upgrades</span>
                         </h3>
                         <div id="upgradesList">
                             <!-- Upgrades will be populated by JavaScript -->
@@ -1400,11 +1502,11 @@
                     <div class="unicorn" id="unicorn">🦄</div>
                     <div class="click-power">
                         <button class="btn btn-boost" id="boostButton" disabled>
-                            <span>🌈</span> Activate Rainbow Boost (Cost: 1,000)
+                            <span>🌈</span> <span data-translate="boost_button">Activate Rainbow Boost (Cost: 1,000)</span>
                         </button>
                     </div>
                     <div class="boost-indicator" id="boostIndicator">
-                        <span>🚀</span> Rainbow Boost Active!
+                        <span>🚀</span> <span data-translate="boost_active">Rainbow Boost Active!</span>
                     </div>
                 </div>
             </div>
@@ -1415,9 +1517,9 @@
     <section id="achievements" class="tabs-container">
         <div class="container">
             <h2 class="section-title">
-                Magical <span class="section-accent">Achievements</span>
+                <span data-translate="achievements_title">Magical</span> <span class="section-accent" data-translate="achievements_title_accent">Achievements</span>
             </h2>
-            <p class="section-subtitle">
+            <p class="section-subtitle" data-translate="achievements_subtitle">
                 Unlock these magical achievements as you progress in your unicorn adventure
             </p>
             
@@ -1433,15 +1535,15 @@
     <section id="prestige" class="tabs-container">
         <div class="container">
             <h2 class="section-title">
-                Unicorn <span class="section-accent">Prestige</span>
+                <span data-translate="prestige_title">Unicorn</span> <span class="section-accent" data-translate="prestige_title_accent">Prestige</span>
             </h2>
-            <p class="section-subtitle">
+            <p class="section-subtitle" data-translate="prestige_subtitle">
                 Reset your progress to gain permanent bonuses and unlock new content
             </p>
             
             <div class="prestige-container">
-                <h3 class="prestige-title">Ascend to Higher Magic</h3>
-                <p class="prestige-description">
+                <h3 class="prestige-title" data-translate="prestige_heading">Ascend to Higher Magic</h3>
+                <p class="prestige-description" data-translate="prestige_description">
                     When you prestige, you reset your Magic Points and upgrades but gain permanent 
                     Rainbow Shards that boost all future production. Each prestige level increases 
                     your base production multiplier.
@@ -1450,16 +1552,16 @@
                 <div class="prestige-stats">
                     <div class="prestige-stat">
                         <div class="prestige-stat-value" id="rainbowShards">0</div>
-                        <div class="prestige-stat-label">Rainbow Shards</div>
+                        <div class="prestige-stat-label" data-translate="rainbow_shards">Rainbow Shards</div>
                     </div>
                     <div class="prestige-stat">
                         <div class="prestige-stat-value" id="prestigeMultiplier">1.00x</div>
-                        <div class="prestige-stat-label">Production Multiplier</div>
+                        <div class="prestige-stat-label" data-translate="production_multiplier">Production Multiplier</div>
                     </div>
                 </div>
                 
                 <button class="btn btn-primary" id="prestigeButton" disabled>
-                    <span>🌟</span> Ascend (Requires 1,000,000 Magic Points)
+                    <span>🌟</span> <span data-translate="prestige_button">Ascend (Requires 1,000,000 Magic Points)</span>
                 </button>
             </div>
         </div>
@@ -1469,54 +1571,54 @@
     <section id="about" class="tabs-container">
         <div class="container">
             <h2 class="section-title">
-                About <span class="section-accent">TAP-TAP UNICORN</span>
+                <span data-translate="about_title">About</span> <span class="section-accent" data-translate="about_title_accent">TAP-TAP UNICORN</span>
             </h2>
-            <p class="section-subtitle">
+            <p class="section-subtitle" data-translate="about_subtitle">
                 The most addictive clicker game with magical unicorns and rainbows
             </p>
             
             <div class="about-content">
                 <div class="about-text">
-                    <h3>What is TAP-TAP UNICORN?</h3>
+                    <h3 data-translate="about_heading1">What is TAP-TAP UNICORN?</h3>
                     
-                    <p>
+                    <p data-translate="about_para1">
                         TAP-TAP UNICORN is an incredibly addictive idle clicker game where you tap the magical unicorn to earn Magic Points. 
                         Use your points to purchase upgrades that automatically generate more points for you.
                     </p>
                     
-                    <p>
-                        The game features beautiful rainbow visuals, satisfying animations, и прогрессивная система, которая будет заставлять вас 
-                        возвращаться снова и снова. Сколько магических очков вы сможете собрать?
+                    <p data-translate="about_para2">
+                        The game features beautiful rainbow visuals, satisfying animations, and a progressive system that will keep you 
+                        coming back for more. How many Magic Points can you collect?
                     </p>
                     
                     <div class="features-grid">
                         <div class="feature">
                             <div class="feature-icon">🦄</div>
-                            <div class="feature-title">Magical Unicorn</div>
-                            <div class="feature-description">Tap the enchanted unicorn to earn Magic Points</div>
+                            <div class="feature-title" data-translate="feature1_title">Magical Unicorn</div>
+                            <div class="feature-description" data-translate="feature1_desc">Tap the enchanted unicorn to earn Magic Points</div>
                         </div>
                         <div class="feature">
                             <div class="feature-icon">✨</div>
-                            <div class="feature-title">Powerful Upgrades</div>
-                            <div class="feature-description">Unlock upgrades that generate points automatically</div>
+                            <div class="feature-title" data-translate="feature2_title">Powerful Upgrades</div>
+                            <div class="feature-description" data-translate="feature2_desc">Unlock upgrades that generate points automatically</div>
                         </div>
                         <div class="feature">
                             <div class="feature-icon">🌈</div>
-                            <div class="feature-title">Rainbow Boost</div>
-                            <div class="feature-description">Temporary multiplier for your point generation</div>
+                            <div class="feature-title" data-translate="feature3_title">Rainbow Boost</div>
+                            <div class="feature-description" data-translate="feature3_desc">Temporary multiplier for your point generation</div>
                         </div>
                         <div class="feature">
                             <div class="feature-icon">🏆</div>
-                            <div class="feature-title">Achievements</div>
-                            <div class="feature-description">Complete challenges and unlock rewards</div>
+                            <div class="feature-title" data-translate="feature4_title">Achievements</div>
+                            <div class="feature-description" data-translate="feature4_desc">Complete challenges and unlock rewards</div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="about-text">
-                    <h3>Game Features</h3>
+                    <h3 data-translate="about_heading2">Game Features</h3>
                     
-                    <p>
+                    <p data-translate="about_para3">
                         • Beautiful magical unicorn with satisfying click effects<br>
                         • Multiple upgrades with increasing power and visual feedback<br>
                         • Rainbow boost for temporary point multiplication<br>
@@ -1526,13 +1628,13 @@
                         • Fully responsive design for all devices
                     </p>
                     
-                    <p>
+                    <p data-translate="about_para4">
                         The game automatically saves your progress, so you can continue right where you left off!
                     </p>
                     
-                    <h3>How to Play</h3>
+                    <h3 data-translate="about_heading3">How to Play</h3>
                     
-                    <p>
+                    <p data-translate="about_para5">
                         1. Tap the unicorn to earn Magic Points<br>
                         2. Buy upgrades to generate points automatically<br>
                         3. Unlock achievements for special rewards<br>
@@ -1551,14 +1653,14 @@
             <div class="footer-content">
                 <div class="footer-logo">
                     <span>🦄</span>
-                    <span>TAP-TAP UNICORN</span>
+                    <span data-translate="app_title">TAP-TAP UNICORN</span>
                 </div>
                 
                 <div class="footer-links">
-                    <a href="#game" class="footer-link" data-tab="game">Game</a>
-                    <a href="#about" class="footer-link" data-tab="about">About</a>
-                    <a href="#achievements" class="footer-link" data-tab="achievements">Achievements</a>
-                    <a href="#prestige" class="footer-link" data-tab="prestige">Prestige</a>
+                    <a href="#game" class="footer-link" data-tab="game" data-translate="nav_game">Game</a>
+                    <a href="#about" class="footer-link" data-tab="about" data-translate="nav_about">About</a>
+                    <a href="#achievements" class="footer-link" data-tab="achievements" data-translate="nav_achievements">Achievements</a>
+                    <a href="#prestige" class="footer-link" data-tab="prestige" data-translate="nav_prestige">Prestige</a>
                 </div>
                 
                 <div class="social-links">
@@ -1574,8 +1676,8 @@
                 </div>
                 
                 <p class="copyright">
-                    © 2024 TAP-TAP UNICORN — The most addictive clicker game. All rights reserved.<br>
-                    Made with ❤️ and 🦄 magic by Globaly Genius
+                    © 2024 TAP-TAP UNICORN — <span data-translate="footer_copyright">The most addictive clicker game. All rights reserved.</span><br>
+                    <span data-translate="footer_made_with">Made with ❤️ and 🦄 magic by Globaly Genius</span>
                 </p>
             </div>
         </div>
@@ -1798,6 +1900,214 @@
             offlineProgress: true
         };
 
+        // Translation system
+        const translations = {
+            en: {
+                // App title
+                "app_title": "TAP-TAP UNICORN",
+                
+                // Navigation
+                "nav_game": "Game",
+                "nav_about": "About",
+                "nav_achievements": "Achievements",
+                "nav_prestige": "Prestige",
+                "nav_theme": "Theme",
+                
+                // Language selector
+                "lang_en": "EN",
+                "lang_en_full": "English",
+                "lang_ru_full": "Russian",
+                "lang_be_full": "Belarusian",
+                
+                // Game section
+                "score_label": "Magic Points",
+                "per_second": "per second",
+                "total_clicks": "Total Clicks",
+                "prestige_level": "Prestige Level",
+                "upgrades_title": "Magical Upgrades",
+                "boost_button": "Activate Rainbow Boost (Cost: 1,000)",
+                "boost_active": "Rainbow Boost Active!",
+                
+                // Achievements section
+                "achievements_title": "Magical",
+                "achievements_title_accent": "Achievements",
+                "achievements_subtitle": "Unlock these magical achievements as you progress in your unicorn adventure",
+                
+                // Prestige section
+                "prestige_title": "Unicorn",
+                "prestige_title_accent": "Prestige",
+                "prestige_subtitle": "Reset your progress to gain permanent bonuses and unlock new content",
+                "prestige_heading": "Ascend to Higher Magic",
+                "prestige_description": "When you prestige, you reset your Magic Points and upgrades but gain permanent Rainbow Shards that boost all future production. Each prestige level increases your base production multiplier.",
+                "rainbow_shards": "Rainbow Shards",
+                "production_multiplier": "Production Multiplier",
+                "prestige_button": "Ascend (Requires 1,000,000 Magic Points)",
+                
+                // About section
+                "about_title": "About",
+                "about_title_accent": "TAP-TAP UNICORN",
+                "about_subtitle": "The most addictive clicker game with magical unicorns and rainbows",
+                "about_heading1": "What is TAP-TAP UNICORN?",
+                "about_para1": "TAP-TAP UNICORN is an incredibly addictive idle clicker game where you tap the magical unicorn to earn Magic Points. Use your points to purchase upgrades that automatically generate more points for you.",
+                "about_para2": "The game features beautiful rainbow visuals, satisfying animations, and a progressive system that will keep you coming back for more. How many Magic Points can you collect?",
+                "about_heading2": "Game Features",
+                "about_para3": "• Beautiful magical unicorn with satisfying click effects<br>• Multiple upgrades with increasing power and visual feedback<br>• Rainbow boost for temporary point multiplication<br>• Achievement system to track your progress<br>• Prestige system for long-term progression<br>• Beautiful dark/light theme options<br>• Fully responsive design for all devices",
+                "about_para4": "The game automatically saves your progress, so you can continue right where you left off!",
+                "about_heading3": "How to Play",
+                "about_para5": "1. Tap the unicorn to earn Magic Points<br>2. Buy upgrades to generate points automatically<br>3. Unlock achievements for special rewards<br>4. Use Rainbow Boosts to multiply your earnings<br>5. Prestige to gain permanent bonuses and restart<br>6. Enjoy the magical journey!",
+                
+                // Features
+                "feature1_title": "Magical Unicorn",
+                "feature1_desc": "Tap the enchanted unicorn to earn Magic Points",
+                "feature2_title": "Powerful Upgrades",
+                "feature2_desc": "Unlock upgrades that generate points automatically",
+                "feature3_title": "Rainbow Boost",
+                "feature3_desc": "Temporary multiplier for your point generation",
+                "feature4_title": "Achievements",
+                "feature4_desc": "Complete challenges and unlock rewards",
+                
+                // Footer
+                "footer_copyright": "The most addictive clicker game. All rights reserved.",
+                "footer_made_with": "Made with ❤️ and 🦄 magic by Globaly Genius"
+            },
+            ru: {
+                // App title
+                "app_title": "TAP-TAP UNICORN",
+                
+                // Navigation
+                "nav_game": "Игра",
+                "nav_about": "О игре",
+                "nav_achievements": "Достижения",
+                "nav_prestige": "Престиж",
+                "nav_theme": "Тема",
+                
+                // Language selector
+                "lang_en": "АНГ",
+                "lang_en_full": "Английский",
+                "lang_ru_full": "Русский",
+                "lang_be_full": "Беларуский",
+                
+                // Game section
+                "score_label": "Магические Очки",
+                "per_second": "в секунду",
+                "total_clicks": "Всего Кликов",
+                "prestige_level": "Уровень Престижа",
+                "upgrades_title": "Магические Улучшения",
+                "boost_button": "Активировать Радужный Буст (Стоимость: 1,000)",
+                "boost_active": "Радужный Буст Активен!",
+                
+                // Achievements section
+                "achievements_title": "Магические",
+                "achievements_title_accent": "Достижения",
+                "achievements_subtitle": "Открывайте эти магические достижения по мере продвижения в приключении с единорогом",
+                
+                // Prestige section
+                "prestige_title": "Единорог",
+                "prestige_title_accent": "Престиж",
+                "prestige_subtitle": "Сбросьте прогресс, чтобы получить постоянные бонусы и открыть новый контент",
+                "prestige_heading": "Вознеситесь к Высшей Магии",
+                "prestige_description": "При престиже вы сбрасываете Магические Очки и улучшения, но получаете постоянные Радужные Осколки, которые усиливают всю будущую продукцию. Каждый уровень престижа увеличивает ваш базовый множитель производства.",
+                "rainbow_shards": "Радужные Осколки",
+                "production_multiplier": "Множитель Производства",
+                "prestige_button": "Вознестись (Требуется 1,000,000 Магических Очков)",
+                
+                // About section
+                "about_title": "О",
+                "about_title_accent": "TAP-TAP UNICORN",
+                "about_subtitle": "Самая аддиктивная кликер-игра с магическими единорогами и радугами",
+                "about_heading1": "Что такое TAP-TAP UNICORN?",
+                "about_para1": "TAP-TAP UNICORN - невероятно аддиктивная idle-кликер игра, в которой вы нажимаете на магического единорога, чтобы заработать Магические Очки. Используйте свои очки для покупки улучшений, которые автоматически генерируют больше очков.",
+                "about_para2": "Игра отличается красивой радужной графикой, приятными анимациями и прогрессивной системой, которая будет заставлять вас возвращаться снова и снова. Сколько Магических Очков вы сможете собрать?",
+                "about_heading2": "Особенности Игры",
+                "about_para3": "• Красивый магический единорог с приятными эффектами кликов<br>• Множество улучшений с растущей силой и визуальной обратной связью<br>• Радужный буст для временного умножения очков<br>• Система достижений для отслеживания прогресса<br>• Система престижа для долгосрочного развития<br>• Красивые темы (темная/светлая)<br>• Полностью адаптивный дизайн для всех устройств",
+                "about_para4": "Игра автоматически сохраняет ваш прогресс, так что вы можете продолжить прямо с того места, где остановились!",
+                "about_heading3": "Как Играть",
+                "about_para5": "1. Нажимайте на единорога, чтобы заработать Магические Очки<br>2. Покупайте улучшения для автоматической генерации очков<br>3. Открывайте достижения для специальных наград<br>4. Используйте Радужные Бусты для умножения заработка<br>5. Престижируйтесь для получения постоянных бонусов и перезапуска<br>6. Наслаждайтесь магическим путешествием!",
+                
+                // Features
+                "feature1_title": "Магический Единорог",
+                "feature1_desc": "Нажимайте на зачарованного единорога, чтобы заработать Магические Очки",
+                "feature2_title": "Мощные Улучшения",
+                "feature2_desc": "Открывайте улучшения, которые генерируют очки автоматически",
+                "feature3_title": "Радужный Буст",
+                "feature3_desc": "Временный множитель для генерации очков",
+                "feature4_title": "Достижения",
+                "feature4_desc": "Выполняйте задания и открывайте награды",
+                
+                // Footer
+                "footer_copyright": "Самая аддиктивная кликер-игра. Все права защищены.",
+                "footer_made_with": "Сделано с ❤️ и 🦄 магией от Globaly Genius"
+            },
+            be: {
+                // App title
+                "app_title": "TAP-TAP UNICORN",
+                
+                // Navigation
+                "nav_game": "Гульня",
+                "nav_about": "Аб гульні",
+                "nav_achievements": "Дасягненні",
+                "nav_prestige": "Прэстыж",
+                "nav_theme": "Тэма",
+                
+                // Language selector
+                "lang_en": "АНГ",
+                "lang_en_full": "Англійская",
+                "lang_ru_full": "Русская",
+                "lang_be_full": "Беларуская",
+                
+                // Game section
+                "score_label": "Магічныя Ачкі",
+                "per_second": "у секунду",
+                "total_clicks": "Усяго Клікаў",
+                "prestige_level": "Узровень Прэстыжу",
+                "upgrades_title": "Магічныя Паляпшэнні",
+                "boost_button": "Актываваць Вясёлкавы Буст (Кошт: 1,000)",
+                "boost_active": "Вясёлкавы Буст Актыўны!",
+                
+                // Achievements section
+                "achievements_title": "Магічныя",
+                "achievements_title_accent": "Дасягненні",
+                "achievements_subtitle": "Адкрывайце гэтыя магічныя дасягненні па меры прасоўвання ў прыгодзе з аднарогам",
+                
+                // Prestige section
+                "prestige_title": "Аднарог",
+                "prestige_title_accent": "Прэстыж",
+                "prestige_subtitle": "Скінуць прагрэс, каб атрымаць пастаянныя бонусы і адкрыць новы кантэнт",
+                "prestige_heading": "Узнясіцеся да Вышэйшай Магіі",
+                "prestige_description": "Пры прэстыжы вы скідаеце Магічныя Ачкі і паляпшэнні, але атрымліваеце пастаянныя Вясёлкавыя Аскепкі, якія ўзмацняюць усю будучую прадукцыю. Кожны ўзровень прэстыжу павялічвае ваш базавы множнік вытворчасці.",
+                "rainbow_shards": "Вясёлкавыя Аскепкі",
+                "production_multiplier": "Множнік Вытворчасці",
+                "prestige_button": "Узнясціся (Патрабуецца 1,000,000 Магічных Ачкоў)",
+                
+                // About section
+                "about_title": "Аб",
+                "about_title_accent": "TAP-TAP UNICORN",
+                "about_subtitle": "Самая аддыктыўная клікер-гульня з магічнымі аднарогамі і вясёлкамі",
+                "about_heading1": "Што такое TAP-TAP UNICORN?",
+                "about_para1": "TAP-TAP UNICORN - неверагодна аддыктыўная idle-клікер гульня, у якой вы націскаеце на магічнага аднарога, каб зарабіць Магічныя Ачкі. Выкарыстоўвайце свае ачкі для куплі паляпшэнняў, якія аўтаматычна генеруюць больш ачкоў.",
+                "about_para2": "Гульня вылучаецца прыгожай вясёлкавай графікай, прыемнымі анімацыямі і прагрэсіўнай сістэмай, якая будзе прымушаць вас вяртацца зноў і зноў. Колькі Магічных Ачкоў вы зможаце сабраць?",
+                "about_heading2": "Асаблівасці Гульні",
+                "about_para3": "• Прыгожы магічны аднарог з прыемнымі эфектамі клікаў<br>• Мноства паляпшэнняў з расучай сілай і візуальнай зваротнай сувяззю<br>• Вясёлкавы буст для часовага памнажэння ачкоў<br>• Сістэма дасягненняў для адсочвання прагрэсу<br>• Сістэма прэстыжу для доўгатэрміновага развіцця<br>• Прыгожыя тэмы (цёмная/светлая)<br>• Поўнасцю адаптыўны дызайн для ўсіх прылад",
+                "about_para4": "Гульня аўтаматычна захоўвае ваш прагрэс, так што вы можаце працягнуць прама з таго месца, дзе спыніліся!",
+                "about_heading3": "Як Гуляць",
+                "about_para5": "1. Націскайце на аднарога, каб зарабіць Магічныя Ачкі<br>2. Купляйце паляпшэнні для аўтаматычнай генерацыі ачкоў<br>3. Адкрывайце дасягненні для спецыяльных узнагарод<br>4. Выкарыстоўвайце Вясёлкавыя Бусты для памнажэння заробку<br>5. Прэстыжыруйцеся для атрымання пастаянных бонусаў і перазапуску<br>6. Атрымлівайце асалоду ад магічнага падарожжа!",
+                
+                // Features
+                "feature1_title": "Магічны Аднарог",
+                "feature1_desc": "Націскайце на зачараванага аднарога, каб зарабіць Магічныя Ачкі",
+                "feature2_title": "Магутныя Паляпшэнні",
+                "feature2_desc": "Адкрывайце паляпшэнні, якія генеруюць ачкі аўтаматычна",
+                "feature3_title": "Вясёлкавы Буст",
+                "feature3_desc": "Часовы множнік для генерацыі ачкоў",
+                "feature4_title": "Дасягненні",
+                "feature4_desc": "Выконвайце заданні і адкрывайце ўзнагароды",
+                
+                // Footer
+                "footer_copyright": "Самая аддыктыўная клікер-гульня. Усе правы абаронены.",
+                "footer_made_with": "Зроблена з ❤️ і 🦄 магіяй ад Globaly Genius"
+            }
+        };
+
         // DOM Elements
         const scoreElement = document.getElementById('score');
         const scorePerSecondElement = document.getElementById('scorePerSecondValue');
@@ -1891,12 +2201,12 @@
                         <div class="upgrade-description">${upgrade.description}</div>
                         <div class="upgrade-stats">
                             <div class="upgrade-stat">+${formatNumber(upgrade.production * gameState.prestigeMultiplier)}/s</div>
-                            <div class="upgrade-stat">Owned: ${upgrade.count}</div>
+                            <div class="upgrade-stat">${translations[getCurrentLanguage()].owned || 'Owned'}: ${upgrade.count}</div>
                         </div>
                     </div>
                     <div>
                         <div class="upgrade-cost">${formatNumber(upgrade.cost)} MP</div>
-                        <button class="btn btn-primary upgrade-btn" data-id="${upgrade.id}">Buy</button>
+                        <button class="btn btn-primary upgrade-btn" data-id="${upgrade.id}">${translations[getCurrentLanguage()].buy || 'Buy'}</button>
                     </div>
                 `;
                 
@@ -1936,7 +2246,7 @@
                 
                 // Show notification for first upgrade
                 if (upgrade.count === 1 && upgrade.id === 1) {
-                    showNotification('First upgrade purchased! Your unicorn is getting stronger!', 'success');
+                    showNotification(translations[getCurrentLanguage()].first_upgrade || 'First upgrade purchased! Your unicorn is getting stronger!', 'success');
                 }
             } else {
                 // Visual feedback for insufficient funds
@@ -1954,12 +2264,12 @@
                 
                 if (gameState.score >= upgrade.cost) {
                     button.disabled = false;
-                    button.textContent = 'Buy';
+                    button.textContent = translations[getCurrentLanguage()].buy || 'Buy';
                     button.classList.remove('btn-secondary');
                     button.classList.add('btn-primary');
                 } else {
                     button.disabled = true;
-                    button.textContent = 'Buy';
+                    button.textContent = translations[getCurrentLanguage()].buy || 'Buy';
                     button.classList.remove('btn-primary');
                     button.classList.add('btn-secondary');
                 }
@@ -1970,7 +2280,7 @@
                 
                 // Update count display
                 const countElement = button.closest('.upgrade-item').querySelector('.upgrade-stat:last-child');
-                countElement.textContent = `Owned: ${upgrade.count}`;
+                countElement.textContent = `${translations[getCurrentLanguage()].owned || 'Owned'}: ${upgrade.count}`;
                 
                 // Update production display
                 const productionElement = button.closest('.upgrade-item').querySelector('.upgrade-stat:first-child');
@@ -2042,7 +2352,7 @@
                 
                 updateScoreDisplay();
                 boostButton.disabled = true;
-                boostButton.textContent = 'Rainbow Boost Active!';
+                boostButton.textContent = translations[getCurrentLanguage()].boost_active || 'Rainbow Boost Active!';
                 boostIndicator.classList.add('active');
                 
                 // Visual feedback for boost
@@ -2061,17 +2371,17 @@
                 checkAchievements();
                 
                 // Show notification
-                showNotification('Rainbow Boost activated! Your points are doubled for 10 seconds!', 'success');
+                showNotification(translations[getCurrentLanguage()].boost_activated || 'Rainbow Boost activated! Your points are doubled for 10 seconds!', 'success');
                 
                 // End boost after duration
                 setTimeout(() => {
                     gameState.boostActive = false;
                     boostButton.disabled = gameState.score < 1000;
-                    boostButton.innerHTML = '<span>🌈</span> Activate Rainbow Boost (Cost: 1,000)';
+                    boostButton.innerHTML = `<span>🌈</span> ${translations[getCurrentLanguage()].boost_button || 'Activate Rainbow Boost (Cost: 1,000)'}`;
                     boostIndicator.classList.remove('active');
                     
                     // Show notification
-                    showNotification('Rainbow Boost has ended.', 'warning');
+                    showNotification(translations[getCurrentLanguage()].boost_ended || 'Rainbow Boost has ended.', 'warning');
                 }, gameState.boostDuration);
             }
         });
@@ -2103,7 +2413,7 @@
                 checkAchievements();
                 
                 // Show notification
-                showNotification(`Prestige achieved! You gained ${shardsEarned} Rainbow Shards. Production multiplier is now ${gameState.prestigeMultiplier.toFixed(2)}x!`, 'success');
+                showNotification(translations[getCurrentLanguage()].prestige_achieved || `Prestige achieved! You gained ${shardsEarned} Rainbow Shards. Production multiplier is now ${gameState.prestigeMultiplier.toFixed(2)}x!`, 'success');
             }
         });
 
@@ -2162,7 +2472,7 @@
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <div style="font-size: 2rem;">${achievement.icon}</div>
                     <div>
-                        <div style="font-weight: bold; font-size: 1.1rem;">Achievement Unlocked!</div>
+                        <div style="font-weight: bold; font-size: 1.1rem;">${translations[getCurrentLanguage()].achievement_unlocked || 'Achievement Unlocked!'}</div>
                         <div>${achievement.name}</div>
                     </div>
                 </div>
@@ -2251,7 +2561,7 @@
             if (gameState.boostActive && now >= gameState.boostEndTime) {
                 gameState.boostActive = false;
                 boostButton.disabled = gameState.score < 1000;
-                boostButton.innerHTML = '<span>🌈</span> Activate Rainbow Boost (Cost: 1,000)';
+                boostButton.innerHTML = `<span>🌈</span> ${translations[getCurrentLanguage()].boost_button || 'Activate Rainbow Boost (Cost: 1,000)'}`;
                 boostIndicator.classList.remove('active');
             }
             
@@ -2309,7 +2619,7 @@
                         // Show offline progress notification
                         if (totalOfflineEarnings > 0) {
                             setTimeout(() => {
-                                showNotification(`While you were away, your unicorn earned ${formatNumber(Math.floor(totalOfflineEarnings))} Magic Points!`, 'success');
+                                showNotification(`${translations[getCurrentLanguage()].offline_earnings || 'While you were away, your unicorn earned'} ${formatNumber(Math.floor(totalOfflineEarnings))} ${translations[getCurrentLanguage()].magic_points || 'Magic Points'}!`, 'success');
                             }, 1000);
                         }
                     }
@@ -2364,6 +2674,22 @@
             
             // Auto-save every 30 seconds
             setInterval(saveGame, 30000);
+        }
+
+        // Get current language
+        function getCurrentLanguage() {
+            return localStorage.getItem('language') || 'en';
+        }
+
+        // Apply translation
+        function applyTranslation(lang) {
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
         }
 
         // Tab navigation
@@ -2453,10 +2779,58 @@
             localStorage.setItem('theme', isDark ? 'light' : 'dark');
         });
         
+        // Language selector functionality
+        const languageToggle = document.getElementById('languageToggle');
+        const languageDropdown = document.getElementById('languageDropdown');
+        
+        languageToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('active');
+        });
+        
+        // Close language dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!languageToggle.contains(e.target) && !languageDropdown.contains(e.target)) {
+                languageDropdown.classList.remove('active');
+            }
+        });
+        
+        // Language selection
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = option.getAttribute('data-lang');
+                
+                // Update toggle text
+                const flag = option.querySelector('.language-flag').textContent;
+                const text = option.textContent.trim();
+                languageToggle.innerHTML = `${flag} ${text.split(' ')[0]}`;
+                
+                // Close dropdown
+                languageDropdown.classList.remove('active');
+                
+                // Save language preference
+                localStorage.setItem('language', lang);
+                
+                // Apply translation
+                applyTranslation(lang);
+            });
+        });
+        
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             // Set current year in copyright
             document.querySelector('.copyright').innerHTML = document.querySelector('.copyright').innerHTML.replace('2024', new Date().getFullYear());
+            
+            // Load saved language
+            const savedLanguage = localStorage.getItem('language') || 'en';
+            const languageOption = document.querySelector(`.language-option[data-lang="${savedLanguage}"]`);
+            if (languageOption) {
+                const flag = languageOption.querySelector('.language-flag').textContent;
+                const text = languageOption.textContent.trim();
+                languageToggle.innerHTML = `${flag} ${text.split(' ')[0]}`;
+                applyTranslation(savedLanguage);
+            }
             
             // Load saved theme
             const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -2474,6 +2848,19 @@
             
             // Initialize the game
             initGame();
+            
+            // PWA Service Worker Registration
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then((registration) => {
+                            console.log('SW registered: ', registration);
+                        })
+                        .catch((registrationError) => {
+                            console.log('SW registration failed: ', registrationError);
+                        });
+                });
+            }
         });
     </script>
 </body>
